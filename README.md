@@ -1,2 +1,4 @@
 # M
-EtherCAT master
+EtherCAT master for Windows
+
+Status: Development
