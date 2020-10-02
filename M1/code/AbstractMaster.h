@@ -47,16 +47,57 @@ struct Datagramm
 };
 #pragma pack(push)
 
+struct EVar
+{
+	unsigned short slaveN;
+	unsigned short varN;
+	unsigned short len;
+	unsigned char* data;
+};
+
+struct EReg
+{
+	unsigned short slaveN;
+	unsigned short regN;
+	unsigned short len;
+	unsigned char* data;
+};
+
 class AbstractPacket
 {
 public:
-	virtual void AddRx(unsigned short slaveN, unsigned short rg, unsigned short len);
-	virtual void AddTx(unsigned short slaveN, unsigned short rg, unsigned short len, const unsigned char* data);
-	virtual void Add
+
+	virtual AbstractPacket& operator += (const EVar& right) = 0;
+	virtual AbstractPacket& operator += (const EReg& right) = 0;
+
+
+	//add rx cmd to packet buffer
+	virtual void AddRx(unsigned short slaveN, unsigned short rg, unsigned short len) = 0;
+	//add rx cmd to packet buffer & send packet
+	virtual void AddSendRx(unsigned short slaveN, unsigned short rg, unsigned short len) = 0;
+
+	//add tx cmd to packet buffer
+	virtual void AddTx(unsigned short slaveN, unsigned short rg, unsigned short len, const unsigned char* data) = 0;
+	//add tx cmd to packet buffer & send packet
+	virtual void AddSendTx(unsigned short slaveN, unsigned short rg, unsigned short len, const unsigned char* data) = 0;
+
+
+
+
+	//add log cmd to packet buffer
+	virtual void AddLog(unsigned long logAddr, unsigned short len, unsigned char* data) = 0;
+	//add log cmd to packet buffer & send packet
+	virtual void AddSendLog(unsigned long logAddr, unsigned short len, unsigned char* data) = 0;
+	//Parse recieved packet. Read data from log addr. Put to data* variable with subindex subId.  
+	//return  number of byte in variable. If no valid data recieved, return 0;
+	virtual unsigned short Get(unsigned long logAddr, unsigned short subId, unsigned char* data) = 0;
+	virtual unsigned short Get(unsigned short slaveN, unsigned short rg, unsigned char* data) = 0;
+	//send packet and erase packet buffer
+	virtual void Send() = 0;
+	//erase packet buffer
+	virtual void Reset() = 0;
 	virtual ~AbstractPacket() {}
 };
-
-
 
 class AbstractMaster
 {
