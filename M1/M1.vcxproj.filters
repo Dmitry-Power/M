@@ -18,6 +18,9 @@
     <ClCompile Include="code\main.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="code\Master.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="code\AbstractMaster.h">
@@ -27,6 +30,9 @@
       <Filter>Исходные файлы</Filter>
     </ClInclude>
     <ClInclude Include="code\SyncManager.h">
+      <Filter>Исходные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="code\Master.h">
       <Filter>Исходные файлы</Filter>
     </ClInclude>
   </ItemGroup>
