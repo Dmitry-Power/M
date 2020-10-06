@@ -1,6 +1,69 @@
 ﻿#include <iostream>
 using namespace std;
 
+template <typename T>
+class AVar
+{
+private:
+	T x;
+public:
+	AVar( const T val) :  x(val)
+	{
+	};
+	virtual AVar& operator = (const T& right)
+	{
+		x = right;
+		return *this;
+	}
+	virtual operator T() const
+	{
+		return x;
+	}
+
+	virtual operator const unsigned char* () const
+	{
+		return (const unsigned char*) &x;
+	}
+	~AVar() {};
+};
+
+//template <typename T1>
+//void Out(const AVar<T1>* any)
+//{
+//	cout << "Any:" <<  (T1) *any << "\n";
+//}
+
+template <class  T> 
+void Out(T any)
+{
+	cout << "Any:" << any << "\n";
+};
+
+//void Out(const AVar<int>* any)
+//{
+//	cout << "Any:" << *any << "\n"
+//}
+
+int main()
+{
+    cout << "!!!Hello World!!!\n";
+	AVar <int> num(750);
+	AVar <unsigned char> bty(32);
+	AVar <unsigned short> sss(34000);
+	AVar <double> xxx(3.1415);
+	int nuM = 750;
+	double xxX = 3.1415;
+//	Out(nuM);
+//	Out(xxX);
+	//Printer pr;
+	Out(num);
+	//Out(bty);
+	//Out(sss);
+	Out(xxx);
+}
+
+
+
 //class BuffVar
 //{
 //private:
@@ -81,31 +144,7 @@ using namespace std;
 //	~Printer() {}
 //};
 
-int main()
-{
-    cout << "!!!Hello World!!!\n";
-	//AnyVar <int> num(750);
-	//AnyVar <unsigned char> bty(32);
-	//AnyVar <unsigned short> sss(34000);
-	//AnyVar <double> xxx(3.1415);
-	//Printer pr;
-	//pr.Out(num);
-	//pr.Out(bty);
-	//pr.Out(sss);
-	//pr.Out(xxx);
-	//AbstractVar <int> b(77);
-	//cout << "b = " <<  b << "\n";
-	//b = c;
-	//cout << "b = " << b << "\n";
-	//c = 999;
-	//b = c;
-	//cout << "b = " << b << "\n";
-	//b = 9876;
-	//cout << "b = " << b  << "\n";
-	//a = b;
-	//cout << "a = " << a << "\n";
 
-}
 
 // Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
 // Отладка программы: F5 или меню "Отладка" > "Запустить отладку"

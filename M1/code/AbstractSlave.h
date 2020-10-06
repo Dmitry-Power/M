@@ -89,7 +89,7 @@ public:
 	virtual bool Ini(unsigned short phAddr) = 0;
 	virtual const SLaveInfo* GetInfo() = 0;
 //Add 
-	virtual void AddToLogGroup(unsigned long groupNum,)
+//	virtual void AddToLogGroup(unsigned long groupNum)
 	virtual ~AbstractSlave() {}
 };
 

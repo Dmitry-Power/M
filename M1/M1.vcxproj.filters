@@ -23,9 +23,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="code\AbstractMaster.h">
-      <Filter>Исходные файлы</Filter>
-    </ClInclude>
     <ClInclude Include="code\AbstractSlave.h">
       <Filter>Исходные файлы</Filter>
     </ClInclude>

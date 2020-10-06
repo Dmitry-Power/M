@@ -1,21 +1,19 @@
 #include <Master.h>
 
+Master::Master():  currPos(0x10)
+{
+}
+
 const AbstractSlave* Master::Ini(unsigned short& nSlaves)
 {
 	return nullptr;
 }
 
-AbstractMaster& Master::operator+=(const BuffVar& v)
+template <class T>
+Master& Master::operator += (const T& v)
 {
-	// TODO: вставьте здесь оператор return
-}
 
-void Master::WriteReg(const BuffVar& v)
-{
-}
-
-void Master::ReadReg(const BuffVar& v)
-{
+	return *this;
 }
 
 void Master::Send()

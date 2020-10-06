@@ -1,4 +1,5 @@
 #pragma once
+#include <AbstractSlave.h>
 #include <AbstractMaster.h>
 
 const unsigned char M2S_ECAT_FR_HDR[14] = { 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 1, 1, 1, 1, 1, 1, 0x88, 0xa4 };
@@ -48,23 +49,69 @@ struct Datagramm
 };
 #pragma pack(push)
 
-class Master : public AbstarctMaster
+class Master
 {
 public:
+	Master();
 	// Recognizes the network configuration. Initializes all slaves to operational state.
 	// Returns a pointer to an array of initialized slaves.
 	// In the variable nSlaves returns the number of active slaves
 	virtual const AbstractSlave* Ini(unsigned short& nSlaves);
 	//Adds cmd containing the x variable to the packet.
 	//if the command has already been added, updates the x value in it
-	AbstractMaster& operator += (const BuffVar& v);
-	//Adds cmd containing the register read or write to the packet.
-	//if the command has already been added, updates the x value in it
-	virtual void WriteReg(const BuffVar& v);
-	virtual void ReadReg(const BuffVar& v);
+	template <class T>
+	Master& operator += (const T& v);
+	////Adds cmd containing the register read or write to the packet.
+	////if the command has already been added, updates the x value in it
+	//virtual void WriteReg(const BuffVar& v);
+	//virtual void ReadReg(const BuffVar& v);
 	//Send packet.
 	virtual void Send();
-
 	virtual	~Master() {}
+private:
+	unsigned char buff[2048];
+	unsigned short currPos;
+
 };
 
+template <typename T>
+class AnyVar
+{
+private:
+	Master* mstr;
+	unsigned short slaveN;
+	unsigned short varN;
+	T x;
+	unsigned short dtSize;
+	//BuffVar* bfV;
+public:
+	AnyVar(Master* m, unsigned short sNum, unsigned short vNum, const T val) :
+		mstr(m), slaveN(sNum), varN(vNum), x(val), dtSize(sizeof(T))
+	{
+		//BuffVar(unsigned short sNum, unsigned short vNum, unsigned short size, const unsigned char* data)
+		//bfV = new BuffVar(slaveN, varN, dtSize, (const unsigned char*)x);
+	};
+	//passing the variable to the master to add it to the buffer
+	virtual AnyVar& operator = (const T& right)
+	{
+		x = right;
+		*mstr += x;
+		return *this;
+	}
+	//  Return value of variable, reading in last exchange. 
+	//	Passing the variable to the master to add it to the buffer for next exchange
+	virtual operator T()
+	{
+		*mstr += x;
+		return x;
+	}
+	unsigned short GetSlaveN() { return slaveN; }
+	unsigned short GetVarN() { return varN; }
+	virtual ~AnyVar() { }//delete bfV;}
+};
+
+template<class T>
+inline Master& Master::operator+=(const T& v)
+{
+	// TODO: вставьте здесь оператор return
+}

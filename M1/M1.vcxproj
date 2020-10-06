@@ -144,7 +144,6 @@
     <ClCompile Include="code\Master.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="code\AbstractMaster.h" />
     <ClInclude Include="code\AbstractSlave.h" />
     <ClInclude Include="code\Master.h" />
     <ClInclude Include="code\SyncManager.h" />
